@@ -1,15 +1,47 @@
 <div class="container">
-  <div class="header">
-    ACCU - Host Asset Reconciliation
+  <div class="header hidden-print">
+    <div class="button" (click)="goBack()">
+      @if (showResults) {
+        <mat-icon>arrow_back</mat-icon>
+      }
+    </div>
+    <div>ACCU - Host Asset Reconciliation</div>
+    <div></div>
   </div>
   <div class="main">
-    <div class="dropzone">
-      <input type="file" id="fileDropRef" (change)="fileChange($event.target)"/>
-      <img src="upload.png">
-      <h3>Drag and drop your files here</h3>
-      <h3>or</h3>
-      <label for="fileDropRef">Browse for files</label>
-    </div>
-<!--    <button type="button" (click)="uploadFile()">Upload Files</button>-->
+    @if (!showResults) {
+      <div class="dropzone">
+        <input type="file" id="fileDropRef" (change)="fileChange($event.target)"/>
+        <img src="upload.png">
+        <h3>Drag and drop your files here</h3>
+        <h3>or</h3>
+        <label for="fileDropRef">Browse for files</label>
+      </div>
+    } @else if (warnings.length > 0) {
+      <div class="warning">
+        <p>The following problems were found:</p>
+        <ul>
+          @for (warning of warnings; track warning) {
+            <li>{{ warning }}</li>
+          }
+        </ul>
+      </div>
+    } @else {
+      <div class="results">
+        <h2>Asset Systems Analysis Results</h2>
+        <div class="hide-unless-printed">{{ Date() | date }}</div>
+        <div class="download-buttons hidden-print">
+          <button class="button" (click)="downloadExcel()">Download as Excel file</button>
+        </div>
+        @for (key of Object.keys(results).sort(); track key) {
+          <p>{{ key }}:</p>
+          <ul>
+            @for (issue of results[key]; track issue) {
+              <li>{{ issue }}</li>
+            }
+          </ul>
+        }
+      </div>
+    }
   </div>
 </div>

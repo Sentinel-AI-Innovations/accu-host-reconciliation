@@ -4,18 +4,31 @@
   flex-direction: column;
 }
 
+.button {
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
 .header {
-  background-color: forestgreen;
+  background-color: rgb(44, 127, 207);
   color: white;
-  display: block;
+  display: flex;
   font-size: 1.8rem;
   padding: 4px;
   text-align: center;
   width: 100%;
+  justify-content: space-between;
+  align-items: baseline;
 }
 
 .main {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  h2 {
+    text-align: center;
+  }
 }
 
 .dropzone {
@@ -53,7 +66,42 @@
   }
 }
 
-button {
-  font-size: 1.2rem;
-  cursor: pointer;
+.warning {
+  display: inline-block;
+  align-self: center;
+  margin-top: 2rem;
+}
+
+.results {
+  display: inline-block;
+  align-self: center;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 19.2px;
+  }
+
+  .download-buttons {
+    display: flex;
+    justify-content: center;
+
+    button {
+      padding: 0.2rem 0.5rem;
+    }
+  }
+}
+
+.hide-unless-printed {
+  display: none;
+}
+
+@media print {
+  .hidden-print {
+    display: none !important;
+  }
+
+  .hide-unless-printed {
+    display: block !important;
+    text-align: center;
+  }
 }
