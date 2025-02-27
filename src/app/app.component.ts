@@ -166,14 +166,17 @@ export class AppComponent {
     this.evaluate_by_name("Intune", this.intune, "Device name", "", this.ignore_host_prefixes["intune"])
   }
 
-  readExcelTab(sheet: string): any[] {
+  readExcelTab(sheet: string): any[] | undefined {
     const worksheet = this.workbook.getWorksheet(sheet)!;
     const ret: any[] = [];
-    worksheet.eachRow((row, rowNumber) => {
-      const r = row.values as any[];
-      r.shift(); // First cell is always empty
-      ret.push(r);
-    });
+    try {
+      worksheet.eachRow((row, rowNumber) => {
+        const r = row.values as any[];
+        r.shift(); // First cell is always empty
+        ret.push(r);
+      });
+    } catch (e) {
+    }
     return ret;
   }
 
